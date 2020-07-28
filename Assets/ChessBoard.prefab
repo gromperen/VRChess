@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2583255416829641793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2583255416829641799}
+  - component: {fileID: 2583255416829641792}
+  m_Layer: 0
+  m_Name: ChessBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2583255416829641799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583255416829641793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2583255416829641792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583255416829641793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491bee81ff3ce964e8fde3a602ee479f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  STATE: 0
+  chessPrefabs:
+  - {fileID: 6029406112924063413, guid: 47b80df371047884d88e61287d696c92, type: 3}
+  - {fileID: 7195004024475774787, guid: 17b5c1948b344f146a97fea31f57b906, type: 3}
+  - {fileID: 8152758615369147459, guid: cc8e599a68bf77c4c995a3798e0a21e3, type: 3}
+  - {fileID: 219828887209313443, guid: 7d58e513746abdb48adcaac6ac6df096, type: 3}
+  - {fileID: 1948812087952479253, guid: aa602c58b1cc16144b9517be9015a531, type: 3}
+  - {fileID: 1820943166129048645, guid: d3f52a9889df55e42a8764ca62dd667b, type: 3}
+  - {fileID: 6467230730572920070, guid: 9ced344024ef81641a199608c15dcbf0, type: 3}
+  - {fileID: 523161297207949151, guid: 897841649f67ee34cb196e335f2747a7, type: 3}
+  - {fileID: 9078409096502890110, guid: cd2d85f4ec7cd2342b638d283440f6fe, type: 3}
+  - {fileID: 1108899540325121789, guid: a1b429765dc6be445b0172f185b49e1d, type: 3}
+  - {fileID: 8168561128382122444, guid: f8f930f5c4937b4428b8e59a7b42a692, type: 3}
+  - {fileID: 3875180193076527038, guid: 506a4ceb10f475746b154dc08ba5daf0, type: 3}
