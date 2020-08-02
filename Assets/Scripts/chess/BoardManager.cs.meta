@@ -3,7 +3,10 @@ guid: 491bee81ff3ce964e8fde3a602ee479f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - snapPrefab: {fileID: 1435481300459821054, guid: 1ccf605c16058bd40a5e01e061d97aa3,
+      type: 3}
+  - XROffsetGrabInteractableScript: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

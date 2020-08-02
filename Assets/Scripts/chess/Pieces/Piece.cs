@@ -15,4 +15,17 @@ public class Piece : MonoBehaviour
         CurrentX = x;
         CurrentY = y;
     }
+
+    public bool[,] PossibleMoves()
+    {
+        bool[,] ret = new bool[8,8]; 
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j <8; ++j)
+            {
+                ret[i,j] = true;
+            }
+        }
+        return ret;
+    }
 }

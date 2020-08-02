@@ -1,10 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEditor;
+using UnityEditor.Presets;
 
 public class BoardManager : MonoBehaviour
 {
+    public static BoardManager Instance{set; get;}
+
     public int STATE = 0; // 0 = White, 1 = Black, 2 = Game Over
     public bool PlayerIsWhite = true;
 
@@ -16,7 +21,6 @@ public class BoardManager : MonoBehaviour
     public GameObject snapPrefab;
     public List<GameObject> chessPrefabs;
     public static List<GameObject> activePieces = new List<GameObject>();
-    public XROffsetGrabInteractable XROffsetGrabInteractableScript;
 
 
     // Start is called before the first frame update
@@ -35,40 +39,12 @@ public class BoardManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        /*
-        if (selectedPiece == null)
-        {
-            UpdateSelection();
-        }
-        else
-        {
-            if (!checkValidPieceSelection())
-            {
-                selectedPiece = null;
-            }
-        }
-        */
     }
 
-    bool checkValidPieceSelection()
+    
+    public void Test()
     {
-        if (STATE != 0 || (PlayerIsWhite != selectedPiece.isWhite))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    void UpdateSelection()
-    {
-        foreach (GameObject i in activePieces)
-        {
-            if (Mathf.RoundToInt(i.transform.position.y) != 0)
-            {
-                selectedPiece = board[Mathf.RoundToInt(i.transform.position.x), Mathf.RoundToInt(i.transform.position.z)];
-                break;
-            }
-        }
+        Debug.Log("TEST");
     }
 
     void SpawnAllSnapzones()
@@ -87,35 +63,93 @@ public class BoardManager : MonoBehaviour
         GameObject temp = Instantiate(snapPrefab, GetTileCentre(x, y), Quaternion.Euler(0, 0, 0)) as GameObject;
         temp.transform.SetParent(transform);
         snapZones[x, y] = temp;
+
+    }
+
+    public void ResetSelectedPiece()
+    {
+        selectedPiece.Object.transform.position = GetTileCentre(selectedPiece.CurrentX, selectedPiece.CurrentY);
+        Debug.Log("reset selected piece to " + selectedPiece.CurrentX + ","+ selectedPiece.CurrentY);
+        selectedPiece = null;
+    }
+
+    public void PlayerSelectPiece()
+    {
+
+    }
+
+    void PlayerMovePiece(int x, int y)
+    {
+        if (selectedPiece.PossibleMoves()[x, y])
+        {
+            board[selectedPiece.CurrentX, selectedPiece.CurrentY] = null; 
+            board[x, y] = selectedPiece;
+            board[x, y].SetPosition(x, y);
+        }
+        else
+        {
+            ResetSelectedPiece();
+        }
+    }
+    
+    public void DetectMovedPiece()
+    {
+        Piece foundpiece;
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                if (board[i, j] == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    GameObject currentObject = board[i, j].Object;
+                    if (Math.Round(currentObject.transform.position.x - 0.5) != board[i, j].CurrentX ||
+                        Math.Round(currentObject.transform.position.z - 0.5) != board[i, j].CurrentY)
+                    {
+                        foundpiece = board[i, j];
+                        // Debug.Log(Math.Round(currentObject.transform.position.x - 0.5));
+                        Debug.Log("Moved Piece is from" + foundpiece.CurrentX + "," + foundpiece.CurrentY + "Value: " + foundpiece.Value);
+                        selectedPiece = foundpiece;
+                        PlayerMovePiece((int)Math.Round(currentObject.transform.position.x - 0.5), (int)Math.Round(currentObject.transform.position.z - 0.5));
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     public void InitTurn()
     {
         bool isPlayerTurn;
-        if ((STATE == 0 && !PlayerIsWhite) || (STATE == 1 && PlayerIsWhite)) {
+        if ((STATE == 0 && !PlayerIsWhite) || (STATE == 1 && PlayerIsWhite))
+        {
             isPlayerTurn = false;
         }
-        else{
+        else
+        {
             isPlayerTurn = true;
         }
         for (int i = 0; i < 8; ++i)
         {
             for (int j = 0; j < 8; ++j)
             {
-               if (board[i, j] != null)
-               {
-                   /*
-                        Add function to get turns and disable Grab if turns are 0
-                   */
-                   if (board[i, j].isWhite == PlayerIsWhite && isPlayerTurn)
-                   {
-                       SetGrab(board[i, j].Object, true);
-                   }
-                   else
-                   {
-                       SetGrab(board[i, j].Object, false);
-                   }
-               } 
+                if (board[i, j] != null)
+                {
+                    /*
+                         Add function to get turns and disable Grab if turns are 0
+                    */
+                    if (board[i, j].isWhite == PlayerIsWhite && isPlayerTurn)
+                    {
+                        SetGrab(board[i, j].Object, true);
+                    }
+                    else
+                    {
+                        SetGrab(board[i, j].Object, false);
+                    }
+                }
             }
         }
     }
@@ -169,6 +203,9 @@ public class BoardManager : MonoBehaviour
         board[x, y].SetPosition(x, y);
         activePieces.Add(temp);
         board[x, y].Object = temp;
+
+        //if (XRScript.CanBeAppliedTo(temp.GetComponent<XROffsetGrabInteractable>()))
+        //    XRScript.ApplyTo(temp.GetComponent<XROffsetGrabInteractable>());
     }
 
 
@@ -210,7 +247,7 @@ public class BoardManager : MonoBehaviour
 
 
     }
-    
+
     Vector3 GetTileCentre(int x, int y)
     {
         Vector3 origin = Vector3.zero;

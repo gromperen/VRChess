@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 5
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &3671141785611117423
 Rigidbody:
   m_ObjectHideFlags: 0
