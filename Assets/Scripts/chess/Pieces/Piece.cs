@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour
+public abstract class Piece : MonoBehaviour
 {
     public int CurrentX{set;get;}
     public int CurrentY{set;get;}
     public int Value;
     public bool isWhite;
     public GameObject Object;
-    private BoardManager _BoardManager;
+    public BoardManager _BoardManager;
     private BoardHighlights _BoardHighlights;
 
     private void Start()
@@ -23,23 +23,23 @@ public class Piece : MonoBehaviour
         CurrentY = y;
     }
 
-    public bool[,] PossibleMoves()
+    public virtual bool[,] PossibleMoves()
     {
-        bool[,] ret = new bool[8,8]; 
-        for (int i = 0; i < 8; ++i)
-        {
-            for (int j = 0; j <8; ++j)
-            {
-                ret[i,j] = true;
-            }
-        }
-        return ret;
+        return new bool [8,8];
     }
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Hands")
         {
-            _BoardHighlights.HighlightSquares(_BoardManager.board[0,0].PossibleMoves());
+            _BoardHighlights.HighlightSquares(PossibleMoves());
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.tag == "Hands")
+        {
+            _BoardHighlights.HideHighlights();
         }
     }
 }
