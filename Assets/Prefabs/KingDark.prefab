@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6454855314417912716}
   - component: {fileID: 6655718880018031445}
   - component: {fileID: -8794220761728047417}
-  - component: {fileID: -2600045114681995543}
+  - component: {fileID: 312278365201505437}
   m_Layer: 11
   m_Name: KingDark
   m_TagString: Untagged
@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 999
-  player: 1
+  isWhite: 0
+  Object: {fileID: 0}
 --- !u!54 &-8794220761728047417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &-2600045114681995543
+--- !u!64 &312278365201505437
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

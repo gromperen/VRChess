@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9055118005331882834}
   - component: {fileID: 6749088871224502861}
   - component: {fileID: 5721057309816008146}
-  - component: {fileID: -5435007553904432083}
+  - component: {fileID: -7358568502908853773}
   m_Layer: 11
   m_Name: RookDark
   m_TagString: Untagged
@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 5
-  player: 1
+  isWhite: 0
+  Object: {fileID: 0}
 --- !u!54 &5721057309816008146
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &-5435007553904432083
+--- !u!64 &-7358568502908853773
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

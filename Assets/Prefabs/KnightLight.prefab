@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4137939458643150149}
   - component: {fileID: -8149662727043254827}
   - component: {fileID: 5583092949138538054}
-  - component: {fileID: 1091866456091986532}
+  - component: {fileID: 7852377703532759993}
   m_Layer: 11
   m_Name: KnightLight
   m_TagString: Untagged
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 3
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &-8149662727043254827
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &1091866456091986532
+--- !u!64 &7852377703532759993
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

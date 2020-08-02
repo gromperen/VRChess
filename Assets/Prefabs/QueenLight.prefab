@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3093929744082127119}
   - component: {fileID: -7500091694283283474}
   - component: {fileID: 2983820969381489379}
-  - component: {fileID: -696210336138268122}
+  - component: {fileID: 2995882399614592715}
   m_Layer: 11
   m_Name: QueenLight
   m_TagString: Untagged
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 9
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &-7500091694283283474
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &-696210336138268122
+--- !u!64 &2995882399614592715
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

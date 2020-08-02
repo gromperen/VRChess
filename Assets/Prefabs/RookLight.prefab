@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3574296729645220956}
   - component: {fileID: 3671141785611117423}
   - component: {fileID: 6491711591997949588}
-  - component: {fileID: 6883528086792908727}
+  - component: {fileID: -279664746747433383}
   m_Layer: 11
   m_Name: RookLight
   m_TagString: Untagged
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &6883528086792908727
+--- !u!64 &-279664746747433383
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1040597976258054752}
   - component: {fileID: -3221109031061909820}
   - component: {fileID: 5962461177916870550}
-  - component: {fileID: -164645826263297491}
+  - component: {fileID: -1424500615817973060}
   m_Layer: 11
   m_Name: BishopLight
   m_TagString: Untagged
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 3
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &-3221109031061909820
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &-164645826263297491
+--- !u!64 &-1424500615817973060
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

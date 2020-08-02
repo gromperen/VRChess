@@ -8,8 +8,7 @@ using UnityEditor.Presets;
 
 public class BoardManager : MonoBehaviour
 {
-    public static BoardManager Instance{set; get;}
-
+    private BoardHighlights _BoardHighlights;
     public int STATE = 0; // 0 = White, 1 = Black, 2 = Game Over
     public bool PlayerIsWhite = true;
 
@@ -26,6 +25,7 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _BoardHighlights = gameObject.GetComponent<BoardHighlights>();
         SpawnAllPieces();
         SpawnAllSnapzones();
         InitTurn();

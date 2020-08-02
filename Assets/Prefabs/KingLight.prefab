@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9103240019066757671}
   - component: {fileID: -3225406204760874528}
   - component: {fileID: -7834930343057006342}
-  - component: {fileID: 3948945639123147521}
+  - component: {fileID: -8481825345597982057}
   m_Layer: 11
   m_Name: KingLight
   m_TagString: Untagged
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 999
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &-3225406204760874528
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &3948945639123147521
+--- !u!64 &-8481825345597982057
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

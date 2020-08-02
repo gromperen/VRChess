@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1973324471262210936}
   - component: {fileID: 557447990075875677}
   - component: {fileID: -5129339681843369633}
-  - component: {fileID: -7355066077830634464}
+  - component: {fileID: -1665780388036529581}
   m_Layer: 11
   m_Name: PawnLight
   m_TagString: Untagged
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 1
   isWhite: 1
+  Object: {fileID: 0}
 --- !u!54 &557447990075875677
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 0.25
   m_GravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!64 &-7355066077830634464
+--- !u!64 &-1665780388036529581
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

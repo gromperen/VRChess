@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 510380166283262463}
   - component: {fileID: 3081452538890333777}
   - component: {fileID: 9203814801495056435}
-  - component: {fileID: -1296636489010748427}
+  - component: {fileID: 4589857100180040165}
   m_Layer: 11
   m_Name: QueenDark
   m_TagString: Untagged
@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 9
-  player: 1
+  isWhite: 0
+  Object: {fileID: 0}
 --- !u!54 &9203814801495056435
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &-1296636489010748427
+--- !u!64 &4589857100180040165
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

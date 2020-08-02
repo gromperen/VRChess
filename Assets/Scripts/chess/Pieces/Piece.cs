@@ -9,7 +9,14 @@ public class Piece : MonoBehaviour
     public int Value;
     public bool isWhite;
     public GameObject Object;
+    private BoardManager _BoardManager;
+    private BoardHighlights _BoardHighlights;
 
+    private void Start()
+    {
+        _BoardManager = this.transform.parent.GetComponent<BoardManager>();
+        _BoardHighlights = this.transform.parent.GetComponent<BoardHighlights>();
+    }
     public void SetPosition(int x, int y)
     {
         CurrentX = x;
@@ -27,5 +34,12 @@ public class Piece : MonoBehaviour
             }
         }
         return ret;
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Hands")
+        {
+            _BoardHighlights.HighlightSquares(_BoardManager.board[0,0].PossibleMoves());
+        }
     }
 }
