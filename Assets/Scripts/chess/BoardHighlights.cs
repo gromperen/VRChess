@@ -24,13 +24,24 @@ public class BoardHighlights : MonoBehaviour
         }   
     }
 
-    public void HideHighlights()
+    public void HideAllHighlights()
     {
         for (int i = 0; i < 8; ++i)
         {
             for (int j = 0; j < 8; ++j)
             {
                 _BoardManager.snapZones[i, j].GetComponent<MeshRenderer>().enabled = false;
+            }
+        } 
+    }
+    public void HideHighlights(bool [,] moves)
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                if (moves[i,j])
+                    _BoardManager.snapZones[i, j].GetComponent<MeshRenderer>().enabled = false;
             }
         } 
     }

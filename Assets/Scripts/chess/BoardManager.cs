@@ -85,6 +85,7 @@ public class BoardManager : MonoBehaviour
             board[selectedPiece.CurrentX, selectedPiece.CurrentY] = null; 
             board[x, y] = selectedPiece;
             board[x, y].SetPosition(x, y);
+            selectedPiece = null;
         }
         else
         {

@@ -29,7 +29,7 @@ public abstract class Piece : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Hands")
+        if (collision.gameObject.tag == "Hands" && _BoardManager.PlayerIsWhite == isWhite)
         {
             _BoardHighlights.HighlightSquares(PossibleMoves());
         }
@@ -37,9 +37,9 @@ public abstract class Piece : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.tag == "Hands")
+        if (collision.gameObject.tag == "Hands" && _BoardManager.PlayerIsWhite == isWhite)
         {
-            _BoardHighlights.HideHighlights();
+            _BoardHighlights.HideHighlights(PossibleMoves());
         }
     }
 }
