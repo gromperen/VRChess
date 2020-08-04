@@ -8,6 +8,14 @@ using UnityEditor.Presets;
 
 public class BoardManager : MonoBehaviour
 {
+    Dictionary<string, int> TypePrefabIndexMap = new Dictionary<string, int>{
+        {"King", 0},
+        {"Queen", 1},
+        {"Rook", 2},
+        {"Knight", 3},
+        {"Bishop", 4},
+        {"Pawn", 5}
+    };
     private BoardHighlights _BoardHighlights;
     public int STATE = 0; // 0 = White, 1 = Black, 2 = Game Over
     public bool PlayerIsWhite = true;
@@ -68,14 +76,33 @@ public class BoardManager : MonoBehaviour
 
     public void ResetSelectedPiece()
     {
-        selectedPiece.Object.transform.position = GetTileCentre(selectedPiece.CurrentX, selectedPiece.CurrentY);
+        int prefabindex = 0;
+        if (!selectedPiece.isWhite)
+        {
+            prefabindex += 6;
+        }
+        prefabindex += TypePrefabIndexMap[selectedPiece.type];
+
+
+        _BoardHighlights.HideHighlights(selectedPiece.PossibleMoves());
+        
+        activePieces.Remove(selectedPiece.Object);
+        selectedPiece.Object.transform.position = new Vector3(6969, -50, 6969);
+        SpawnPiece(prefabindex,selectedPiece.CurrentX, selectedPiece.CurrentY);
+
+
+
+        // selectedPiece.Object.transform.position = new Vector3(selectedPiece.CurrentX + 0.5f, 2f, selectedPiece.CurrentY + 0.5f); //  GetTileCentre(selectedPiece.CurrentX, selectedPiece.CurrentY);
         Debug.Log("reset selected piece to " + selectedPiece.CurrentX + ","+ selectedPiece.CurrentY);
         selectedPiece = null;
     }
 
-    public void PlayerSelectPiece()
-    {
 
+    void ResetSnapZone(int x, int y)
+    {
+        snapZones[x, y].transform.position = new Vector3(420, -420, 6969);
+        snapZones[x, y] = null;
+        SpawnSnapZone(x, y);
     }
 
     void PlayerMovePiece(int x, int y)
@@ -90,6 +117,7 @@ public class BoardManager : MonoBehaviour
         else
         {
             ResetSelectedPiece();
+            ResetSnapZone(x, y);
         }
     }
     

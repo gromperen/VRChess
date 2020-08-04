@@ -95,9 +95,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4079002d7bc93cd4eaa750aea9289e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: Knight
   Value: 3
   isWhite: 1
   Object: {fileID: 0}
+  _BoardManager: {fileID: 0}
 --- !u!54 &-8149662727043254827
 Rigidbody:
   m_ObjectHideFlags: 0

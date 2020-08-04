@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Piece : MonoBehaviour
 {
+    public string type;
     public int CurrentX{set;get;}
     public int CurrentY{set;get;}
     public int Value;
