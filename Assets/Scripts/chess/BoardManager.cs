@@ -109,9 +109,26 @@ public class BoardManager : MonoBehaviour
     {
         if (selectedPiece.PossibleMoves()[x, y])
         {
+            Piece p = board[x, y];
+            if (p != null)
+            {
+                activePieces.Remove(p.Object);
+                Destroy(p.Object);
+                if (p.type == "King")
+                {
+                    STATE = 2;
+                    return;
+                }
+
+            }
             board[selectedPiece.CurrentX, selectedPiece.CurrentY] = null; 
             board[x, y] = selectedPiece;
             board[x, y].SetPosition(x, y);
+            _BoardHighlights.HideAllHighlights();
+
+            // Capture Piece
+            
+
             selectedPiece = null;
         }
         else
