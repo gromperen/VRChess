@@ -133,11 +133,23 @@ public class BoardManager : MonoBehaviour
         }
         else
         {
+            ResetSnapZone(selectedPiece.CurrentX, selectedPiece.CurrentY);
             ResetSelectedPiece();
             ResetSnapZone(x, y);
         }
     }
     
+
+    void ResetAllSnapZones()
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                ResetSnapZone(i, j);
+            }
+        }
+    }
     public void DetectMovedPiece()
     {
         Piece foundpiece;
