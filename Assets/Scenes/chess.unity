@@ -844,7 +844,7 @@ PrefabInstance:
     - target: {fileID: 7329411351015867902, guid: 1ccf605c16058bd40a5e01e061d97aa3,
         type: 3}
       propertyPath: m_OnHoverExit.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7329411351015867902, guid: 1ccf605c16058bd40a5e01e061d97aa3,
         type: 3}
