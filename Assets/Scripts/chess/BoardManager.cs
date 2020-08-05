@@ -116,20 +116,20 @@ public class BoardManager : MonoBehaviour
                 Destroy(p.Object);
                 if (p.type == "King")
                 {
-                    STATE = 2;
-                    return;
+                    // GAME OVER
                 }
-
             }
+            ResetSnapZone(selectedPiece.CurrentX, selectedPiece.CurrentY);
             board[selectedPiece.CurrentX, selectedPiece.CurrentY] = null; 
+            selectedPiece.SetPosition(x, y);
             board[x, y] = selectedPiece;
-            board[x, y].SetPosition(x, y);
             _BoardHighlights.HideAllHighlights();
 
-            // Capture Piece
             
 
-            selectedPiece = null;
+            // Fix for Bug where Piece wont enter the place of the destroyed piece.
+            ResetSnapZone(x, y);
+            ResetSelectedPiece();
         }
         else
         {
@@ -184,9 +184,6 @@ public class BoardManager : MonoBehaviour
             {
                 if (board[i, j] != null)
                 {
-                    /*
-                         Add function to get turns and disable Grab if turns are 0
-                    */
                     if (board[i, j].isWhite == PlayerIsWhite && isPlayerTurn)
                     {
                         SetGrab(board[i, j].Object, true);
