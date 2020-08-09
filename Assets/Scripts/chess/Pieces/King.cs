@@ -6,15 +6,15 @@ public class King : Piece
 {
     public override bool[,] PossibleMoves()
     {
-        bool[,] ret = new bool[8,8];
+        bool[,] ret = new bool[8, 8];
         Piece p;
         int i, j;
-        
+        bool[,] attacked = _BoardManager.AttackedSquares(!isWhite, false);
         // UP
         if (CurrentY != 7)
         {
             j = CurrentY + 1;
-            
+
             i = System.Math.Max(CurrentX - 1, 0);
             for (; i < 8 && i <= CurrentX + 1; ++i)
             {
@@ -25,12 +25,12 @@ public class King : Piece
                 }
             }
         }
-        
+
         // Down
         if (CurrentY != 0)
         {
             j = CurrentY - 1;
-            
+
             i = System.Math.Max(CurrentX - 1, 0);
             for (; i < 8 && i <= CurrentX + 1; ++i)
             {
@@ -63,10 +63,105 @@ public class King : Piece
         }
 
 
-        
+        // Castling
+        if (isWhite)
+        {
+            if (_BoardManager.WhiteCastleRight)
+            {
+                // Short castle
+                if (_BoardManager.WhiteCastleShort)
+                {
+                    bool cancastle = true;
+                    for (i = 5; i < 8; ++i)
+                    {
+                        if (_BoardManager.board[i, 0] != null || attacked[i, 0])
+                        {
+                            cancastle = false;
+                        }
+                    }
+                    if (cancastle)
+                    {
+                        ret[6, 0] = true;
+                    }
+                }
+
+
+                // long castle
+                if (_BoardManager.WhiteCastleLong)
+                {
+                    bool cancastle = true;
+                    for (i = 0; i <= 5; ++i)
+                    {
+                        if (_BoardManager.board[i, 0] != null || attacked[i, 0])
+                        {
+                            cancastle = false;
+                        }
+                    }
+                    if (cancastle)
+                    {
+                        ret[2, 0] = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (_BoardManager.BlackCastleRight)
+            {
+                // Short castle
+                if (_BoardManager.BlackCastleShort)
+                {
+
+                    bool cancastle = true;
+                    for (i = 5; i < 8; ++i)
+                    {
+                        if (_BoardManager.board[i, 7] != null || attacked[i, 7])
+                        {
+                            cancastle = false;
+                        }
+                    }
+                    if (cancastle)
+                    {
+                        ret[6, 7] = true;
+                    }
+                }
+
+
+                // long castle
+                if (_BoardManager.BlackCastleLong)
+                {
+
+                    bool cancastle = true;
+
+                    for (i = 0; i <= 5; ++i)
+                    {
+                        if (_BoardManager.board[i, 7] != null || attacked[i, 7])
+                        {
+                            cancastle = false;
+                        }
+                    }
+                    if (cancastle)
+                    {
+                        ret[2, 7] = true;
+                    }
+                }
+            }
+        }
+
+        // remove attacked squares
+        for (i = 0; i < 8; ++i)
+        {
+            for (j = 0; j < 8; ++j)
+            {
+                if (attacked[i, j])
+                {
+                    ret[i, j] = false;
+                }
+            }
+        }
 
         return ret;
-        
+
     }
 
 }

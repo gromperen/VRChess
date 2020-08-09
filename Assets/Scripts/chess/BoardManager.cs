@@ -9,7 +9,11 @@ using UnityEditor.Presets;
 public class BoardManager : MonoBehaviour
 {
     public bool WhiteCastleRight = true;
+    public bool WhiteCastleLong = true;
+    public bool WhiteCastleShort = true;
     public bool BlackCastleRight = true;
+    public bool BlackCastleLong = true;
+    public bool BlackCastleShort = true;
     Dictionary<string, int> TypePrefabIndexMap = new Dictionary<string, int>{
         {"King", 0},
         {"Queen", 1},
@@ -24,7 +28,7 @@ public class BoardManager : MonoBehaviour
 
     public Piece[,] board { set; get; }
     private Piece selectedPiece;
-    public GameObject[,] snapZones {set; get;}
+    public GameObject[,] snapZones { set; get; }
     private const float TILE_SIZE = 1.0f;
 
     public GameObject snapPrefab;
@@ -32,6 +36,8 @@ public class BoardManager : MonoBehaviour
     public static List<GameObject> activePieces = new List<GameObject>();
     public int[] EnPassant;
 
+    public bool[,] SquaresAttackedByWhite = new bool[8, 8];
+    public bool[,] SquaresAttackedByBlack = new bool[8, 8];
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +58,7 @@ public class BoardManager : MonoBehaviour
     {
     }
 
-    
+
     public void Test()
     {
         Debug.Log("TEST");
@@ -77,6 +83,51 @@ public class BoardManager : MonoBehaviour
 
     }
 
+    public bool[,] AttackedSquares(bool byWhite, bool recalculate) // Yes I know this is the worst programming you have ever seen so please fix it.
+    {
+        if (recalculate)
+        {
+            Debug.Log("Recalculated Attacked Squares");
+            bool[,] ret = new bool[8, 8];
+            for (int i = 0; i < 8; ++i)
+            {
+                for (int j = 0; j < 8; ++j)
+                {
+                    if (board[i, j] != null && board[i, j].isWhite == byWhite)
+                    {
+                        bool[,] tmp = board[i, j].PossibleMoves();
+
+                        for (int a = 0; a < 8; ++a)
+                        {
+                            for (int b = 0; b < 8; ++b)
+                            {
+                                if (tmp[a, b])
+                                {
+                                    ret[a, b] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (byWhite)
+            {
+                SquaresAttackedByWhite = ret;
+            }
+            else
+            {
+                SquaresAttackedByBlack = ret;
+            }
+            return ret;
+        }
+        else
+        {
+            if (byWhite)
+                return SquaresAttackedByWhite;
+            else
+                return SquaresAttackedByBlack;
+        }
+    }
     public void ResetSelectedPiece()
     {
         int prefabindex = 0;
@@ -140,6 +191,117 @@ public class BoardManager : MonoBehaviour
                 {
                     ResetGame();
                 }
+                if (p.type == "Rook")
+                {
+                    if (STATE == 0)
+                    {
+                        if (p.CurrentX == 0 && p.CurrentY == 0)
+                        {
+                            WhiteCastleLong = false;
+                        }
+                        if (p.CurrentX == 7 && p.CurrentY == 0)
+                        {
+                            WhiteCastleShort = false;
+                        }
+                    }
+                    else
+                    {
+                        if (p.CurrentX == 0 && p.CurrentY == 7)
+                        {
+                            BlackCastleLong = false;
+                        }
+                        if (p.CurrentX == 7 && p.CurrentY == 7)
+                        {
+                            BlackCastleShort = false;
+                        }
+
+                    }
+
+                }
+            }
+            if (selectedPiece.type == "Rook")
+            {
+                if (STATE == 0)
+                {
+                    if (selectedPiece.CurrentX == 0 && selectedPiece.CurrentY == 0)
+                    {
+                        WhiteCastleLong = false;
+                    }
+                    if (selectedPiece.CurrentX == 7 && selectedPiece.CurrentY == 0)
+                    {
+                        WhiteCastleShort = false;
+                    }
+                }
+                else
+                {
+                    if (selectedPiece.CurrentX == 0 && selectedPiece.CurrentY == 7)
+                    {
+                        BlackCastleLong = false;
+                    }
+                    if (selectedPiece.CurrentX == 7 && selectedPiece.CurrentY == 7)
+                    {
+                        BlackCastleShort = false;
+                    }
+
+                }
+            }
+            if (selectedPiece.type == "King")
+            {
+                if (STATE == 0)
+                {
+                    if (WhiteCastleRight)
+                    {
+                        if (y == 0)
+                        {
+                            // Short Castle
+                            if (x == 6)
+                            {
+                                activePieces.Remove(board[7, 0].Object);
+                                Destroy(board[7, 0].Object);
+                                board[7, 0] = null;
+                                ResetSnapZone(7,0);
+                                SpawnPiece(2, 5, 0);
+                            }
+                            else if (x == 2)
+                            {
+                                activePieces.Remove(board[0, 0].Object);
+                                Destroy(board[0, 0].Object);
+                                board[0, 0] = null;
+                                ResetSnapZone(0,0);
+                                SpawnPiece(2, 3, 0);
+
+                            }
+                        }
+                    }
+                    WhiteCastleRight = false;
+                }
+                else
+                {
+                    if (BlackCastleRight)
+                    {
+                        if (y == 7)
+                        {
+                            // Short Castle
+                            if (x == 6)
+                            {
+                                activePieces.Remove(board[7, 7].Object);
+                                Destroy(board[7, 7].Object);
+                                board[7, 7] = null;
+                                ResetSnapZone(7,7);
+                                SpawnPiece(2, 5, 7);
+                            }
+                            else if (x == 2)
+                            {
+                                activePieces.Remove(board[0, 7].Object);
+                                Destroy(board[0, 7].Object);
+                                board[0, 7] = null;
+                                ResetSnapZone(0,7);
+                                SpawnPiece(2, 3, 7);
+                            }
+                        }
+                    }
+                    BlackCastleRight = false;
+                }
             }
             if (selectedPiece.type == "Pawn")
             {
@@ -151,7 +313,7 @@ public class BoardManager : MonoBehaviour
                         int oldx = selectedPiece.CurrentX, oldy = selectedPiece.CurrentY;
                         activePieces.Remove(selectedPiece.Object);
                         selectedPiece.Object.transform.position = new Vector3(6969, 6969, 6969);
-                        ResetSnapZone(x,y);
+                        ResetSnapZone(x, y);
                         ResetSnapZone(oldx, oldy);
                         SpawnPiece(1, x, y);
 
@@ -167,7 +329,7 @@ public class BoardManager : MonoBehaviour
                         int oldx = selectedPiece.CurrentX, oldy = selectedPiece.CurrentY;
                         activePieces.Remove(selectedPiece.Object);
                         selectedPiece.Object.transform.position = new Vector3(6969, 6969, 6969);
-                        ResetSnapZone(x,y);
+                        ResetSnapZone(x, y);
                         ResetSnapZone(oldx, oldy);
                         SpawnPiece(7, x, y);
                         selectedPiece = board[x, y];
@@ -245,6 +407,11 @@ public class BoardManager : MonoBehaviour
     }
     public void DetectMovedPiece()
     {
+
+        
+
+
+
         Piece foundpiece;
         for (int i = 0; i < 8; ++i)
         {
@@ -274,6 +441,20 @@ public class BoardManager : MonoBehaviour
 
     public void InitTurn()
     {
+        // REMOVE THIS LATER
+        bool tmp;
+        if (STATE == 0)
+        {
+            tmp = true;
+        }
+        else
+        {
+            tmp = false;
+        }
+        AttackedSquares(tmp, true);
+        // REMOVE THIS LATER
+
+
         bool isPlayerTurn;
         if ((STATE == 0 && !PlayerIsWhite) || (STATE == 1 && PlayerIsWhite))
         {
