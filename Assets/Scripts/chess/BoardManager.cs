@@ -8,6 +8,8 @@ using UnityEditor.Presets;
 
 public class BoardManager : MonoBehaviour
 {
+    public bool WhiteCastleRight = true;
+    public bool BlackCastleRight = true;
     Dictionary<string, int> TypePrefabIndexMap = new Dictionary<string, int>{
         {"King", 0},
         {"Queen", 1},
@@ -28,6 +30,7 @@ public class BoardManager : MonoBehaviour
     public GameObject snapPrefab;
     public List<GameObject> chessPrefabs;
     public static List<GameObject> activePieces = new List<GameObject>();
+    public int[] EnPassant;
 
 
     // Start is called before the first frame update
@@ -105,8 +108,27 @@ public class BoardManager : MonoBehaviour
         SpawnSnapZone(x, y);
     }
 
+    public void ResetGame()
+    {
+        foreach (GameObject go in activePieces)
+        {
+            go.transform.position = new Vector3 (6969, 69, 6969);
+            Destroy(go);
+        }
+        for (int i = 0; i < 8; ++i)
+        {
+            for (int j = 0; j < 8; ++j)
+            {
+                snapZones[i,j].transform.position = new Vector3 (6969, 69, 6969);
+                snapZones[i, j] = null;
+            }
+        }
+        _BoardHighlights.HideAllHighlights();   
+        STATE = 2;
+    }
     void PlayerMovePiece(int x, int y)
     {
+        // bool isEnpassantMove = false;
         if (selectedPiece.PossibleMoves()[x, y])
         {
             Piece p = board[x, y];
@@ -116,14 +138,85 @@ public class BoardManager : MonoBehaviour
                 Destroy(p.Object);
                 if (p.type == "King")
                 {
-                    // GAME OVER
+                    ResetGame();
                 }
             }
+            if (selectedPiece.type == "Pawn")
+            {
+                // Promotion
+                if (STATE == 0)
+                {
+                    if (y == 7)
+                    {
+                        int oldx = selectedPiece.CurrentX, oldy = selectedPiece.CurrentY;
+                        activePieces.Remove(selectedPiece.Object);
+                        selectedPiece.Object.transform.position = new Vector3(6969, 6969, 6969);
+                        ResetSnapZone(x,y);
+                        ResetSnapZone(oldx, oldy);
+                        SpawnPiece(1, x, y);
+
+                        selectedPiece = board[x, y];
+                        selectedPiece.SetPosition(oldx, oldy);
+
+                    }
+                }
+                else
+                {
+                    if (y == 0)
+                    {
+                        int oldx = selectedPiece.CurrentX, oldy = selectedPiece.CurrentY;
+                        activePieces.Remove(selectedPiece.Object);
+                        selectedPiece.Object.transform.position = new Vector3(6969, 6969, 6969);
+                        ResetSnapZone(x,y);
+                        ResetSnapZone(oldx, oldy);
+                        SpawnPiece(7, x, y);
+                        selectedPiece = board[x, y];
+                        selectedPiece.SetPosition(oldx, oldy);
+
+                    }
+
+                }
+            }
+            // En Passant
+            if (selectedPiece.type == "Pawn" && x == EnPassant[0] && y == EnPassant[1])
+            {
+                // isEnpassantMove = true;
+                if (STATE == 0)
+                {
+                    p = board[x, y + 1];
+                }
+                else 
+                {
+                    p = board[x, y - 1];
+                }
+                
+            }
+
+            EnPassant[0] = -1;
+            EnPassant[1] = -1;
+            if (selectedPiece.type == "Pawn")
+            {
+                if (System.Math.Abs(selectedPiece.CurrentY - y) == 2)
+                {
+                    EnPassant[0] = x;
+                    EnPassant[1] = y;
+                    if (STATE == 0)
+                    {
+                        EnPassant[1] -= 1;
+                    }
+                    else{
+                        EnPassant[1] += 1;
+                    }
+                } 
+            }
+
             ResetSnapZone(selectedPiece.CurrentX, selectedPiece.CurrentY);
             board[selectedPiece.CurrentX, selectedPiece.CurrentY] = null; 
             selectedPiece.SetPosition(x, y);
             board[x, y] = selectedPiece;
             _BoardHighlights.HideAllHighlights();
+
+            
 
             
 
@@ -247,6 +340,13 @@ public class BoardManager : MonoBehaviour
         }
         // Debug.Log("Changed Script Enabledness");
         PlayerIsWhite = !PlayerIsWhite;
+        if (STATE == 0)
+        {
+            STATE = 1;
+        }
+        else{
+            STATE = 0;
+        }
     }
 
     void SpawnPiece(int index, int x, int y, int rotation = 0)
@@ -268,6 +368,8 @@ public class BoardManager : MonoBehaviour
     void SpawnAllPieces()
     {
         board = new Piece[8, 8];
+        EnPassant = new int[2] {-1, -1};
+
 
         // White
 

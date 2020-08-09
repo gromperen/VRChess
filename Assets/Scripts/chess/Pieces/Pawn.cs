@@ -8,11 +8,18 @@ public class Pawn : Piece
     {
         Piece p;
         bool [,] ret = new bool[8,8];
+        int [] enPassant = _BoardManager.EnPassant;
+
+
         if (isWhite)
         {
             // Diagonal Left
             if (CurrentX != 0 && CurrentY != 7) 
             {
+                if (enPassant[0] == CurrentX - 1 && enPassant[1] == CurrentY + 1)
+                {
+                    ret[CurrentX - 1, CurrentY + 1] = true;
+                }
                 p = _BoardManager.board[CurrentX - 1, CurrentY + 1];
                 if (p != null && !p.isWhite)
                 {
@@ -22,7 +29,12 @@ public class Pawn : Piece
             
             // Diagonal Right
             if (CurrentX != 7 && CurrentY != 7) 
-            {
+            { 
+                if (enPassant[0] == CurrentX + 1 && enPassant[1] == CurrentY + 1)
+                {
+                    ret[CurrentX + 1, CurrentY + 1] = true;
+                }
+
                 p = _BoardManager.board[CurrentX + 1, CurrentY + 1];
                 if (p != null && !p.isWhite)
                 {
@@ -53,6 +65,10 @@ public class Pawn : Piece
             // Diagonal Right
             if (CurrentX != 0 && CurrentY != 0) 
             {
+                if (enPassant[0] == CurrentX - 1 && enPassant[1] == CurrentY - 1)
+                {
+                    ret[CurrentX - 1, CurrentY - 1] = true;
+                }
                 p = _BoardManager.board[CurrentX - 1, CurrentY - 1];
                 if (p != null && p.isWhite)
                 {
@@ -63,6 +79,10 @@ public class Pawn : Piece
             // Diagonal Left
             if (CurrentX != 7 && CurrentY != 0) 
             {
+                if (enPassant[0] == CurrentX + 1 && enPassant[1] == CurrentY - 1)
+                {
+                    ret[CurrentX + 1, CurrentY - 1] = true;
+                }
                 p = _BoardManager.board[CurrentX + 1, CurrentY - 1];
                 if (p != null && p.isWhite)
                 {

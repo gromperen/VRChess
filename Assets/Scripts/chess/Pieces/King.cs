@@ -62,6 +62,9 @@ public class King : Piece
             }
         }
 
+
+        
+
         return ret;
         
     }
