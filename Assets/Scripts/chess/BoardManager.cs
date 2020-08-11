@@ -247,7 +247,7 @@ public class BoardManager : MonoBehaviour
             }
             if (selectedPiece.type == "King")
             {
-                if (STATE == 0)
+                if (selectedPiece.isWhite)
                 {
                     if (WhiteCastleRight)
                     {
@@ -257,17 +257,21 @@ public class BoardManager : MonoBehaviour
                             if (x == 6)
                             {
                                 activePieces.Remove(board[7, 0].Object);
+                                board[7, 0].transform.position = new Vector3 (6969, 6969, 6969);
                                 Destroy(board[7, 0].Object);
                                 board[7, 0] = null;
                                 ResetSnapZone(7,0);
+                                ResetSnapZone(5,0);
                                 SpawnPiece(2, 5, 0);
                             }
                             else if (x == 2)
                             {
                                 activePieces.Remove(board[0, 0].Object);
+                                board[0, 0].transform.position = new Vector3 (6969, 6969, 6969);
                                 Destroy(board[0, 0].Object);
                                 board[0, 0] = null;
                                 ResetSnapZone(0,0);
+                                ResetSnapZone(3,0);
                                 SpawnPiece(2, 3, 0);
 
                             }
@@ -285,18 +289,22 @@ public class BoardManager : MonoBehaviour
                             if (x == 6)
                             {
                                 activePieces.Remove(board[7, 7].Object);
+                                board[7, 7].transform.position = new Vector3 (6969, 6969, 6969);
                                 Destroy(board[7, 7].Object);
                                 board[7, 7] = null;
                                 ResetSnapZone(7,7);
-                                SpawnPiece(2, 5, 7);
+                                ResetSnapZone(5,7);
+                                SpawnPiece(8, 5, 7);
                             }
                             else if (x == 2)
                             {
                                 activePieces.Remove(board[0, 7].Object);
+                                board[0, 7].transform.position = new Vector3 (6969, 6969, 6969);
                                 Destroy(board[0, 7].Object);
                                 board[0, 7] = null;
                                 ResetSnapZone(0,7);
-                                SpawnPiece(2, 3, 7);
+                                ResetSnapZone(3,7);
+                                SpawnPiece(8, 3, 7);
                             }
                         }
                     }
@@ -582,6 +590,9 @@ public class BoardManager : MonoBehaviour
         {
             SpawnPiece(5 + 6, i, 6); // Pawn
         }
+
+
+        STATE = 0;
 
 
 
