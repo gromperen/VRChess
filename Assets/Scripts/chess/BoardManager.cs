@@ -392,6 +392,7 @@ public class BoardManager : MonoBehaviour
             ResetSelectedPiece();
             ResetSnapZone(x, y);
         }
+        AttackedSquares(!PlayerIsWhite, true);
     }
     
 
@@ -554,8 +555,8 @@ public class BoardManager : MonoBehaviour
 
         // White
 
-        SpawnPiece(0, 3, 0);     // King
-        SpawnPiece(1, 4, 0);     // Queen
+        SpawnPiece(0, 4, 0);     // King
+        SpawnPiece(1, 3, 0);     // Queen
         SpawnPiece(2, 0, 0);     // Rook
         SpawnPiece(2, 7, 0);     // Rook
         SpawnPiece(3, 1, 0);     // Knight
@@ -569,8 +570,8 @@ public class BoardManager : MonoBehaviour
 
         // Black
 
-        SpawnPiece(0 + 6, 3, 7);     // King
-        SpawnPiece(1 + 6, 4, 7);     // Queen
+        SpawnPiece(0 + 6, 4, 7);     // King
+        SpawnPiece(1 + 6, 3, 7);     // Queen
         SpawnPiece(2 + 6, 0, 7);     // Rook
         SpawnPiece(2 + 6, 7, 7);     // Rook
         SpawnPiece(3 + 6, 1, 7, rotation: 180);     // Knight

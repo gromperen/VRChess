@@ -72,9 +72,16 @@ public class King : Piece
                 if (_BoardManager.WhiteCastleShort)
                 {
                     bool cancastle = true;
+                    for (i = 6; i < 7; ++i)
+                    {
+                        if (_BoardManager.board[i, 0] != null)
+                        {
+                            cancastle = false;
+                        }
+                    }
                     for (i = 5; i < 8; ++i)
                     {
-                        if (_BoardManager.board[i, 0] != null || attacked[i, 0])
+                        if (attacked[i, 0])
                         {
                             cancastle = false;
                         }
@@ -86,13 +93,21 @@ public class King : Piece
                 }
 
 
-                // long castle
+                // Long castle
                 if (_BoardManager.WhiteCastleLong)
                 {
                     bool cancastle = true;
-                    for (i = 0; i <= 5; ++i)
+                    for (i = 1; i < 4; ++i)
                     {
-                        if (_BoardManager.board[i, 0] != null || attacked[i, 0])
+                        if (_BoardManager.board[i, 0] != null)
+                        {
+                            cancastle = false;
+                        }
+                    }
+
+                    for (i = 0; i <=4; ++i)
+                    {
+                        if (attacked[i,0])
                         {
                             cancastle = false;
                         }
@@ -111,11 +126,17 @@ public class King : Piece
                 // Short castle
                 if (_BoardManager.BlackCastleShort)
                 {
-
                     bool cancastle = true;
+                    for (i = 6; i < 7; ++i)
+                    {
+                        if (_BoardManager.board[i, 7] != null)
+                        {
+                            cancastle = false;
+                        }
+                    }
                     for (i = 5; i < 8; ++i)
                     {
-                        if (_BoardManager.board[i, 7] != null || attacked[i, 7])
+                        if (attacked[i, 7])
                         {
                             cancastle = false;
                         }
@@ -127,15 +148,21 @@ public class King : Piece
                 }
 
 
-                // long castle
+                // Long castle
                 if (_BoardManager.BlackCastleLong)
                 {
-
                     bool cancastle = true;
-
-                    for (i = 0; i <= 5; ++i)
+                    for (i = 1; i < 4; ++i)
                     {
-                        if (_BoardManager.board[i, 7] != null || attacked[i, 7])
+                        if (_BoardManager.board[i, 7] != null)
+                        {
+                            cancastle = false;
+                        }
+                    }
+
+                    for (i = 0; i <=4; ++i)
+                    {
+                        if (attacked[i,7])
                         {
                             cancastle = false;
                         }
@@ -159,6 +186,7 @@ public class King : Piece
                 }
             }
         }
+        ret[CurrentX, CurrentY] = false;
 
         return ret;
 
